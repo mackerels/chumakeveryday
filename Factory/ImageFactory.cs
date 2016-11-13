@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CoreSandbox.Provider;
 using CoreSandbox.Utils;
 using CoreSandbox.Provider.Quote;
+using System.Drawing.Text;
 
 namespace CoreSandbox.Factory
 {
@@ -11,16 +12,23 @@ namespace CoreSandbox.Factory
     {
         private static readonly Font Font;
         private static readonly Brush TextColor;
+        private static readonly Brush ShadowColor;
         private static readonly StringFormat LineFormat;
         private static readonly int VerticalMargin = 100;
-        private static readonly int LinesNumber = 5;
+        private static readonly int LinesNumber = 4;
         private static readonly int LineWidth = 30;
-        private static int ImageWidth;
-        private static int ImageHeight;    
+        private static readonly int LineSpacing = 6;
+        private static PrivateFontCollection _privateFontCollection;
+        private static int _imageWidth;
+        private static int _imageHeight;    
 
         static ImageFactory()
-        { 
-            Font = new Font(FontFamily.GenericMonospace, 32);
+        {
+            _privateFontCollection = new PrivateFontCollection();
+            _privateFontCollection.AddFontFile(@"UbuntuMono-R.ttf");
+
+            Font = new Font(_privateFontCollection.Families[0], 36);
+           
             TextColor = Brushes.AntiqueWhite;
             LineFormat = new StringFormat();
             LineFormat.LineAlignment = StringAlignment.Center;
@@ -30,8 +38,8 @@ namespace CoreSandbox.Factory
         public static async Task<Image> GenerateChumak()
         {
             var img = ImageProvider.GetImage();
-            ImageWidth = img.Width;
-            ImageHeight = img.Height;
+            _imageWidth = img.Width;
+            _imageHeight = img.Height;
 
             using (var context = Graphics.FromImage(img))
             {
@@ -54,8 +62,8 @@ namespace CoreSandbox.Factory
 
             for (var i = 0; i < chunks.Length; i++)
             {
-                context.DrawString(chunks[i], Font, TextColor, ImageWidth/2,
-                    ImageHeight - VerticalMargin - i*Font.Size, LineFormat);
+                context.DrawString(chunks[i], Font, TextColor, _imageWidth / 2, 
+                    _imageHeight - VerticalMargin - i * (Font.Size + LineSpacing), LineFormat);
             }
 
             context.Save();
