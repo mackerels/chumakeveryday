@@ -15,7 +15,7 @@ namespace CoreSandbox.Utils
                 if ((line.Length + word.Length) >= maxLength)
                 {
                     yield return line.ToString();
-                    line = new StringBuilder();
+                    line.Clear();
                 }
     
                 line.AppendFormat("{0}{1}", (line.Length > 0) ? " " : "", word);
