@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace CoreSandbox.Utils
 {
@@ -6,14 +7,21 @@ namespace CoreSandbox.Utils
     {
         public static IEnumerable<string> SplitByLength(this string str, int maxLength)
         {
-            var index = 0;
-            while (index + maxLength < str.Length)
+            var words = str.Split(' ');
+            var line = new StringBuilder();
+
+            foreach (var word in words)
             {
-                yield return str.Substring(index, maxLength);
-                index += maxLength;
+                if ((line.Length + word.Length) >= maxLength)
+                {
+                    yield return line.ToString();
+                    line = new StringBuilder();
+                }
+    
+                line.AppendFormat("{0}{1}", (line.Length > 0) ? " " : "", word);
             }
 
-            yield return str.Substring(index);
+            yield return line.ToString();
         }
     }
 }
