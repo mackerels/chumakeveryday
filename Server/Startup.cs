@@ -8,7 +8,11 @@ namespace CoreSandbox.Server
 {
     public class Startup
     {
-        public void Configure(IApplicationBuilder app) => app.Run(Handler);
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseDeveloperExceptionPage();
+            app.Run(Handler);
+        }
 
         private Task Handler(HttpContext context) => Task.Run(async () =>
         {
