@@ -8,20 +8,20 @@ namespace CoreSandbox.Utils
         public static IEnumerable<string> SplitByLength(this string str, int maxLength)
         {
             var words = str.Split(' ');
-            var line = new StringBuilder();
+            var line = string.Empty;
 
             foreach (var word in words)
             {
                 if ((line.Length + word.Length) >= maxLength)
                 {
-                    yield return line.ToString();
-                    line.Clear();
+                    yield return line;
+                    line = string.Empty;
                 }
-    
-                line.AppendFormat("{0}{1}", (line.Length > 0) ? " " : "", word);
+
+                line += string.Format("{0}{1}", line.Length > 0 ? " " : "", word);
             }
 
-            yield return line.ToString();
+            yield return line;
         }
     }
 }
