@@ -1,24 +1,47 @@
 ﻿using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreSandbox.Provider;
+using CoreSandbox.Provider.Quote;
 using CoreSandbox.Utils;
 
 namespace CoreSandbox.Factory
 {
-    public class ImageFactory
+    public static class ImageFactory
     {
         private static readonly Font Font;
-        private static readonly int Width = 36;
+        private static readonly Brush TextColor;
+        private static readonly Brush ShadowColor;
+        private static readonly StringFormat LineFormat;
+        private static readonly int VerticalMargin = 100;
+        private static readonly int LinesNumber = 4;
+        private static readonly int LineWidth = 30;
+        private static readonly int LineSpacing = 6;
+        private static readonly PrivateFontCollection _privateFontCollection;
+        private static int _imageWidth;
+        private static int _imageHeight;
 
         static ImageFactory()
         {
-            Font = new Font(FontFamily.GenericMonospace, 32);
+            _privateFontCollection = new PrivateFontCollection();
+            _privateFontCollection.AddFontFile(@"Fonts/UbuntuMono-R.ttf");
+
+            Font = new Font(_privateFontCollection.Families[0], 36);
+
+            TextColor = Brushes.AntiqueWhite;
+            LineFormat = new StringFormat
+            {
+                LineAlignment = StringAlignment.Center,
+                Alignment = StringAlignment.Center
+            };
         }
 
         public static async Task<Image> GenerateChumak()
         {
             var img = ImageProvider.GetImage();
+            _imageWidth = img.Width;
+            _imageHeight = img.Height;
 
             using (var context = Graphics.FromImage(img))
             {
@@ -29,13 +52,19 @@ namespace CoreSandbox.Factory
 
         private static async Task WriteText(Graphics context)
         {
-            var quote = await QuotesProvider.GetRandomQuote();
+            Quote quote;
 
-            var chunks = quote.Text.SplitByLength(Width).Reverse().ToArray();
+            do
+            {
+                quote = await QuotesProvider.GetRandomQuote();
+            } while (quote.Text.Length > LinesNumber*LineWidth);
+
+            var chunks = quote.Text.SplitByLength(LineWidth).Reverse().ToArray();
 
             for (var i = 0; i < chunks.Length; i++)
             {
-                context.DrawString(chunks[i], Font, Brushes.AntiqueWhite, 0, 860 - i*32);
+                context.DrawString(chunks[i], Font, TextColor, _imageWidth/2,
+                    _imageHeight - VerticalMargin - i*(Font.Size + LineSpacing), LineFormat);
             }
 
             context.Save();

@@ -4,6 +4,6 @@ namespace CoreSandbox.Provider
 {
     public class ImageProvider
     {
-        public static Image GetImage() => Image.FromFile("chumak.jpg");
+        public static Image GetImage() => Image.FromFile("Images/chumak.jpg");
     }
 }
