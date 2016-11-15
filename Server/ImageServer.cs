@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using CoreSandbox.Config;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CoreSandbox.Server
 {
@@ -11,7 +12,7 @@ namespace CoreSandbox.Server
             _host = new WebHostBuilder()
                 .UseKestrel()
                 .UseStartup<Startup>()
-                .UseUrls("http://localhost:11000")
+                .UseUrls($"http://localhost:{Configurator.Config.Port}")
                 .Build();
         }
 

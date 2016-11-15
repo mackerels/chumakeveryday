@@ -2,6 +2,7 @@
 using System.Drawing.Text;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreSandbox.Config;
 using CoreSandbox.Provider;
 using CoreSandbox.Provider.Quote;
 using CoreSandbox.Utils;
@@ -12,11 +13,6 @@ namespace CoreSandbox.Factory
     {
         private static readonly Font Font;
         private static readonly StringFormat LineFormat;
-        private static readonly int VerticalMargin = 100;
-        private static readonly int LinesNumber = 4;
-        private static readonly int LineWidth = 30;
-        private static readonly int LineSpacing = 15;
-        private static readonly int Outline = 2;
         private static readonly PrivateFontCollection _privateFontCollection;
         private static int _imageWidth;
         private static int _imageHeight;
@@ -24,7 +20,7 @@ namespace CoreSandbox.Factory
         static ImageFactory()
         {
             _privateFontCollection = new PrivateFontCollection();
-            _privateFontCollection.AddFontFile(@"Fonts/UbuntuMono-R.ttf");
+            _privateFontCollection.AddFontFile(Configurator.Config.Font);
 
             Font = new Font(_privateFontCollection.Families[0], 32);
 
@@ -51,18 +47,20 @@ namespace CoreSandbox.Factory
         private static async Task WriteText(Graphics context)
         {
             Quote quote;
+            var config = Configurator.Config;
 
             do
             {
                 quote = await QuotesProvider.GetRandomQuote();
-            } while (quote.Text.Length > LinesNumber*LineWidth);
+            } while (quote.Text.Length > config.LinesNumber*config.LineWidth);
 
-            var chunks = quote.Text.SplitByLength(LineWidth).Reverse().ToArray();
+            var chunks = quote.Text.SplitByLength(config.LineWidth).Reverse().ToArray();
 
             for (var i = 0; i < chunks.Length; i++)
             {
                 context.DrawOutlinedString(chunks[i], Font, LineFormat, Brushes.Black, Brushes.White,
-                    new PointF(_imageWidth/2, _imageHeight - VerticalMargin - i*(Font.Size + LineSpacing)), Outline);
+                    new PointF(_imageWidth/2, _imageHeight - config.VerticalMargin - i*(Font.Size + config.LineSpacing)),
+                    config.Outline);
             }
 
             context.Save();
