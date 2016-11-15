@@ -11,13 +11,12 @@ namespace CoreSandbox.Factory
     public static class ImageFactory
     {
         private static readonly Font Font;
-        private static readonly Brush TextColor;
-        private static readonly Brush ShadowColor;
         private static readonly StringFormat LineFormat;
         private static readonly int VerticalMargin = 100;
         private static readonly int LinesNumber = 4;
         private static readonly int LineWidth = 30;
         private static readonly int LineSpacing = 6;
+        private static readonly int Outline = 2;
         private static readonly PrivateFontCollection _privateFontCollection;
         private static int _imageWidth;
         private static int _imageHeight;
@@ -29,7 +28,6 @@ namespace CoreSandbox.Factory
 
             Font = new Font(_privateFontCollection.Families[0], 36);
 
-            TextColor = Brushes.AntiqueWhite;
             LineFormat = new StringFormat
             {
                 LineAlignment = StringAlignment.Center,
@@ -63,8 +61,8 @@ namespace CoreSandbox.Factory
 
             for (var i = 0; i < chunks.Length; i++)
             {
-                context.DrawString(chunks[i], Font, TextColor, _imageWidth/2,
-                    _imageHeight - VerticalMargin - i*(Font.Size + LineSpacing), LineFormat);
+                context.DrawOutlinedString(chunks[i], Font, LineFormat, Brushes.Black, Brushes.White,
+                    new PointF(_imageWidth/2, _imageHeight - VerticalMargin - i*(Font.Size + LineSpacing)), Outline);
             }
 
             context.Save();
