@@ -1,11 +1,11 @@
 ﻿{
-  "Port": 11000,
+  "Port": 11001,
   "VerticalMargin": 100,
   "LinesNumber": 4,
   "LineWidth": 30,
   "LineSpacing": 15,
   "Outline": 2,
   "Font": "Fonts/UbuntuMono-R.ttf",
-  "Image": "Images/chumak.jpg",
+  "Image": "Images/grekan.png",
   "QuoteProvider": "http://api.forismatic.com/api/1.0/?method=getQuote&format=json"
 }
