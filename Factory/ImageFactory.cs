@@ -26,7 +26,7 @@ namespace CoreSandbox.Factory
             _privateFontCollection = new PrivateFontCollection();
             _privateFontCollection.AddFontFile(@"Fonts/UbuntuMono-R.ttf");
 
-            Font = new Font(_privateFontCollection.Families[0], 36);
+            Font = new Font(_privateFontCollection.Families[0], 32);
 
             LineFormat = new StringFormat
             {
