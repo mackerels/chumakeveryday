@@ -15,7 +15,7 @@ namespace CoreSandbox.Factory
         private static readonly int VerticalMargin = 100;
         private static readonly int LinesNumber = 4;
         private static readonly int LineWidth = 30;
-        private static readonly int LineSpacing = 6;
+        private static readonly int LineSpacing = 15;
         private static readonly int Outline = 2;
         private static readonly PrivateFontCollection _privateFontCollection;
         private static int _imageWidth;
