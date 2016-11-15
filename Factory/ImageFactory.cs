@@ -37,11 +37,8 @@ namespace CoreSandbox.Factory
                 LineAlignment = StringAlignment.Center,
                 Alignment = StringAlignment.Center
             };
-           
-            TextOutline = new Pen(Brushes.Black, 2)
-            {
-                LineJoin = LineJoin.Round
-            };
+
+            TextOutline = Pens.Black;
         }
 
         public static async Task<Image> GenerateChumak()
@@ -68,7 +65,7 @@ namespace CoreSandbox.Factory
 
             var chunks = quote.Text.SplitByLength(LineWidth).Reverse().ToArray();
 
-            GraphicsPath graphicsPath = new GraphicsPath();
+            var graphicsPath = new GraphicsPath();
             
             context.SmoothingMode = SmoothingMode.AntiAlias;
             context.PixelOffsetMode = PixelOffsetMode.HighQuality;
