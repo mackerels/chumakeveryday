@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,8 +38,11 @@ namespace CoreSandbox.Factory
                 LineAlignment = StringAlignment.Center,
                 Alignment = StringAlignment.Center
             };
-
-            TextOutline = Pens.Black;
+           
+            TextOutline = new Pen(Brushes.Black, 3)
+            {
+                LineJoin = LineJoin.Round
+            };
         }
 
         public static async Task<Image> GenerateChumak()
@@ -70,10 +74,17 @@ namespace CoreSandbox.Factory
             context.SmoothingMode = SmoothingMode.AntiAlias;
             context.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-            for (var i = 0; i < chunks.Length; i++)
+            for (int i = 0; i < chunks.Length; i++)
             {
-                graphicsPath.AddString(chunks[i], Font.FontFamily, (int)Font.Style, Font.Size,
-                    new Point(_imageWidth / 2, (int)(_imageHeight - VerticalMargin - i * Font.Size + LineSpacing)), 
+                int x = _imageWidth/2;
+                int y = (int) (_imageHeight - VerticalMargin - i*Font.Size + LineSpacing);
+
+                graphicsPath.AddString(
+                    chunks[i], 
+                    Font.FontFamily, 
+                    (int)Font.Style, 
+                    Font.Size,
+                    new Point(x, y), 
                     LineFormat);
             }
 
