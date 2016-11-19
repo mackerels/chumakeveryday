@@ -1,5 +1,8 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Text;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreSandbox.Provider;
@@ -46,6 +49,29 @@ namespace CoreSandbox.Factory
                 await WriteText(context);
                 return img;
             }
+        }
+
+        public static async Task<Image> GenerateDailyChumak()
+        {
+            if (!File.Exists("metadata.chumak"))
+            {
+                File.WriteAllText("metadata.chumak", DateTime.Now.ToBinary().ToString());
+            }
+
+            if (!File.Exists("Images/daily.jpg"))
+            {
+                (await GenerateChumak()).Save("Images/daily.jpg");
+            }
+
+            var metadate = DateTime.FromBinary(long.Parse(File.ReadAllText("metadata.chumak")));
+
+            if ((DateTime.Now - metadate).Days >= 1)
+            {
+                File.WriteAllText("metadata.chumak", DateTime.Now.ToBinary().ToString());
+                (await GenerateChumak()).Save("Images/daily.jpg");
+            }
+
+            return Image.FromFile("Images/daily.jpg");
         }
 
         private static async Task WriteText(Graphics context)

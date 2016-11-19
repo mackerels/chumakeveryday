@@ -1,4 +1,5 @@
-﻿using System.Drawing.Imaging;
+﻿using System;
+using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using CoreSandbox.Factory;
 using Microsoft.AspNetCore.Builder;
@@ -8,20 +9,17 @@ namespace CoreSandbox.Server
 {
     public class Startup
     {
+        private readonly CustomRouter _router;
+
+        public Startup()
+        {
+            _router = new CustomRouter();
+        }
+
         public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
-            app.Run(Handler);
+            app.Run(_router.Handle);
         }
-
-        private Task Handler(HttpContext context) => Task.Run(async () =>
-        {
-            context.Response.ContentType = "image/jpeg";
-
-            using (var image = await ImageFactory.GenerateChumak())
-            {
-                image.Save(context.Response.Body, ImageFormat.Jpeg);
-            }
-        });
     }
 }

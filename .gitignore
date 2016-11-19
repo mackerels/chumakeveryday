@@ -1,3 +1,6 @@
 bin/
 obj/
+.vs/
+metadata.chumak
+Images/daily.jpg
 project.lock.json
