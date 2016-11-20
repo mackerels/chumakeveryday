@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreSandbox.Factory;
@@ -21,9 +22,31 @@ namespace CoreSandbox.Server
                     await Daily(context.Response);
                     break;
                 case "/portal":
+                    await Portal(context.Response);
                     break;
                 default:
+                    await Nothing(context.Response);
                     break;
+            }
+        }
+
+        public async Task Nothing(HttpResponse response)
+        {
+            response.ContentType = "text/html";
+
+            using (var writer = new StreamWriter(response.Body))
+            {
+               await writer.WriteLineAsync("Something goes wrong.");
+            }
+        }
+
+        public async Task Portal(HttpResponse response)
+        {
+            response.ContentType = "text/html";
+
+            using (var stream = new FileStream("Views/chumak.html", FileMode.Open))
+            {
+                await stream.CopyToAsync(response.Body);
             }
         }
 
