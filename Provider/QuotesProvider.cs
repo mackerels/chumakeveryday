@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using CoreSandbox.Config;
 using Newtonsoft.Json;
 
 namespace CoreSandbox.Provider
@@ -17,7 +18,7 @@ namespace CoreSandbox.Provider
         {
             var promise = new TaskCompletionSource<Quote.Quote>();
 
-            Client.GetAsync("http://api.forismatic.com/api/1.0/?method=getQuote&format=json")
+            Client.GetAsync(Configurator.Config.QuoteProvider)
                 .ContinueWith(response => response.Result.Content.ReadAsStringAsync()
                     .ContinueWith(x => promise.SetResult(JsonConvert.DeserializeObject<Quote.Quote>(x.Result))));
 
