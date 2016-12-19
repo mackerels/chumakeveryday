@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Text;
 
-namespace CoreSandbox.Utils
+namespace chumakeveryday.Utils
 {
     public static class Extensions
     {

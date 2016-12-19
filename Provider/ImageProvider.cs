@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
-using CoreSandbox.Config;
+using chumakeveryday.Config;
 
-namespace CoreSandbox.Provider
+namespace chumakeveryday.Provider
 {
     public class ImageProvider
     {

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using Newtonsoft.Json;
 
-namespace CoreSandbox.Config
+namespace chumakeveryday.Config
 {
     public static class Configurator
     {

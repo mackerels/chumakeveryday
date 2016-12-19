@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using CoreSandbox.Config;
+using chumakeveryday.Config;
 using Newtonsoft.Json;
 
-namespace CoreSandbox.Provider
+namespace chumakeveryday.Provider
 {
     public static class QuotesProvider
     {

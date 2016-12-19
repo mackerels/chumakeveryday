@@ -1,11 +1,6 @@
-﻿using System;
-using System.Drawing.Imaging;
-using System.Threading.Tasks;
-using CoreSandbox.Factory;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Builder;
 
-namespace CoreSandbox.Server
+namespace chumakeveryday.Server
 {
     public class Startup
     {

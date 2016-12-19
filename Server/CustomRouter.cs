@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
+﻿using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using CoreSandbox.Factory;
+using chumakeveryday.Factory;
 using Microsoft.AspNetCore.Http;
 
-namespace CoreSandbox.Server
+namespace chumakeveryday.Server
 {
     public class CustomRouter
     {

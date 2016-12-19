@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
-using CoreSandbox.Server;
+using chumakeveryday.Server;
 
-namespace CoreSandbox
+namespace chumakeveryday
 {
     public class Program
     {

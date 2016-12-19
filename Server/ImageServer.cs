@@ -1,7 +1,7 @@
-﻿using CoreSandbox.Config;
+﻿using chumakeveryday.Config;
 using Microsoft.AspNetCore.Hosting;
 
-namespace CoreSandbox.Server
+namespace chumakeveryday.Server
 {
     public class ImageServer
     {

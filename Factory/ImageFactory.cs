@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Text;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using CoreSandbox.Config;
-using CoreSandbox.Provider;
-using CoreSandbox.Provider.Quote;
-using CoreSandbox.Utils;
+using chumakeveryday.Config;
+using chumakeveryday.Provider;
+using chumakeveryday.Provider.Quote;
+using chumakeveryday.Utils;
 
-namespace CoreSandbox.Factory
+namespace chumakeveryday.Factory
 {
     public static class ImageFactory
     {
