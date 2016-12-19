@@ -1,0 +1,17 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    background-color: #313131;
+}
+
+.navbar { height: 8vh; }
+
+.base {
+    background-image: url('/daily');
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100vw;
+    height: 87vh;
+}

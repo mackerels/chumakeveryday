@@ -1,17 +1,19 @@
-﻿using chumakeveryday.Config;
+﻿using System.IO;
+using chumakeveryday.Config;
 using Microsoft.AspNetCore.Hosting;
 
 namespace chumakeveryday.Server
 {
-    public class ImageServer
+    public class CedServer
     {
         private readonly IWebHost _host;
 
-        public ImageServer()
+        public CedServer()
         {
             _host = new WebHostBuilder()
                 .UseKestrel()
                 .UseStartup<Startup>()
+                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseUrls($"http://localhost:{Configurator.Config.Port}")
                 .Build();
         }

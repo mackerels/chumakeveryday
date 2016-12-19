@@ -10,7 +10,7 @@ namespace chumakeveryday
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            var server = new ImageServer();
+            var server = new CedServer();
             server.Run();
         }
     }

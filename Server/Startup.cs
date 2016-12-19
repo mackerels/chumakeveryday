@@ -1,20 +1,23 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using chumakeveryday.Factory;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace chumakeveryday.Server
 {
     public class Startup
     {
-        private readonly CustomRouter _router;
-
-        public Startup()
-        {
-            _router = new CustomRouter();
-        }
-
         public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
-            app.Run(_router.Handle);
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseMvc();
+        }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
+            services.AddSingleton<IImageFactory, ImageFactory>();
         }
     }
 }
