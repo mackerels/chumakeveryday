@@ -5,27 +5,9 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Чумак на каждый день</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #313131;
-        }
-        .navbar {
-            height: 8vh;
-        }
-        .base {
-            background-image: url('http://api.chumak.ml/daily');
-            background-size: contain;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-size: contain;
-            width: 100vw;
-            height: 87vh;
-        }
-    </style>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/lib/jquery-3.1.1.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-inverse">
@@ -48,17 +30,7 @@
 </nav>
 <div class="container base"></div>
 
-<script>
-    $(document).ready(function() {
-        $('.rand').click(function() {
-            var base = $('.base');
-            base.css(
-                    'background-image',
-                    'url(\'http://api.chumak.ml?random=' + new Date().getTime() +'\')'
-            );
-        });
-    });
-</script>
+<script src="js/script/updater.js" ></script>
 
 </body>
 </html>

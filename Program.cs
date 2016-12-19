@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
-using CoreSandbox.Server;
+using chumakeveryday.Server;
 
-namespace CoreSandbox
+namespace chumakeveryday
 {
     public class Program
     {
@@ -10,7 +10,7 @@ namespace CoreSandbox
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            var server = new ImageServer();
+            var server = new CedServer();
             server.Run();
         }
     }

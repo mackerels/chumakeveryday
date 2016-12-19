@@ -1,40 +1,44 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Drawing.Text;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using CoreSandbox.Config;
-using CoreSandbox.Provider;
-using CoreSandbox.Provider.Quote;
-using CoreSandbox.Utils;
+using chumakeveryday.Config;
+using chumakeveryday.Provider;
+using chumakeveryday.Provider.Quote;
+using chumakeveryday.Utils;
 
-namespace CoreSandbox.Factory
+namespace chumakeveryday.Factory
 {
-    public static class ImageFactory
+    public class ImageFactory : IImageFactory
     {
-        private static readonly Font Font;
-        private static readonly StringFormat LineFormat;
-        private static readonly PrivateFontCollection _privateFontCollection;
-        private static int _imageWidth;
-        private static int _imageHeight;
+        private readonly Font _font;
+        private readonly StringFormat _lineFormat;
+        private int _imageWidth;
+        private int _imageHeight;
 
-        static ImageFactory()
+        private const string DailyPath = "Images/daily.jpg";
+        private const string MetaPath = "metadata.chumak";
+
+        private Image _daily;
+
+        public ImageFactory()
         {
-            _privateFontCollection = new PrivateFontCollection();
-            _privateFontCollection.AddFontFile(Configurator.Config.Font);
+            var privateFontCollection = new PrivateFontCollection();
+            privateFontCollection.AddFontFile(Configurator.Config.Font);
 
-            Font = new Font(_privateFontCollection.Families[0], 32);
+            _font = new Font(privateFontCollection.Families[0], 32);
 
-            LineFormat = new StringFormat
+            _lineFormat = new StringFormat
             {
                 LineAlignment = StringAlignment.Center,
                 Alignment = StringAlignment.Center
             };
         }
 
-        public static async Task<Image> GenerateChumak()
+        public async Task<Image> GenerateRandom()
         {
             var img = ImageProvider.GetImage();
             _imageWidth = img.Width;
@@ -47,30 +51,38 @@ namespace CoreSandbox.Factory
             }
         }
 
-        public static async Task<Image> GenerateDailyChumak()
+        public async Task<Image> GenerateDaily()
         {
-            if (!File.Exists("metadata.chumak"))
+            if (!File.Exists(MetaPath))
             {
-                File.WriteAllText("metadata.chumak", DateTime.Now.ToBinary().ToString());
+                File.WriteAllText(MetaPath, DateTime.Now.ToBinary().ToString());
             }
 
-            if (!File.Exists("Images/daily.jpg"))
+            if (!File.Exists(DailyPath))
             {
-                (await GenerateChumak()).Save("Images/daily.jpg");
+                _daily = await GenerateRandom();
+                _daily.Save(DailyPath);
             }
 
-            var metadate = DateTime.FromBinary(long.Parse(File.ReadAllText("metadata.chumak")));
+            if (_daily == null && File.Exists(DailyPath))
+            {
+                _daily = Image.FromFile(DailyPath);
+            }
+
+            var metadate = DateTime.FromBinary(long.Parse(File.ReadAllText(MetaPath)));
 
             if ((DateTime.Now - metadate).Days >= 1)
             {
-                File.WriteAllText("metadata.chumak", DateTime.Now.ToBinary().ToString());
-                (await GenerateChumak()).Save("Images/daily.jpg");
+                File.WriteAllText(MetaPath, DateTime.Now.ToBinary().ToString());
+
+                _daily = await GenerateRandom();
+                _daily.Save(DailyPath);
             }
 
-            return Image.FromFile("Images/daily.jpg");
+            return _daily;
         }
 
-        private static async Task WriteText(Graphics context)
+        private async Task WriteText(Graphics context)
         {
             Quote quote;
             var config = Configurator.Config;
@@ -78,14 +90,15 @@ namespace CoreSandbox.Factory
             do
             {
                 quote = await QuotesProvider.GetRandomQuote();
-            } while (quote.Text.Length > config.LinesNumber*config.LineWidth);
+            } while (quote.Text.Length > config.LinesNumber * config.LineWidth);
 
             var chunks = quote.Text.SplitByLength(config.LineWidth).Reverse().ToArray();
 
             for (var i = 0; i < chunks.Length; i++)
             {
-                context.DrawOutlinedString(chunks[i], Font, LineFormat, Brushes.Black, Brushes.White,
-                    new PointF(_imageWidth/2, _imageHeight - config.VerticalMargin - i*(Font.Size + config.LineSpacing)),
+                context.DrawOutlinedString(chunks[i], _font, _lineFormat, Brushes.Black, Brushes.White,
+                    new PointF(_imageWidth / 2,
+                        _imageHeight - config.VerticalMargin - i * (_font.Size + config.LineSpacing)),
                     config.Outline);
             }
 

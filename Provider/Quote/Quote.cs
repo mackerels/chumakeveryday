@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CoreSandbox.Provider.Quote
+namespace chumakeveryday.Provider.Quote
 {
     public class Quote
     {
