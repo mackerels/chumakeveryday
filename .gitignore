@@ -2,6 +2,7 @@ bin/
 obj/
 .idea/
 .vs/
+.git/
 metadata.chumak
 Images/daily.jpg
 project.lock.json
