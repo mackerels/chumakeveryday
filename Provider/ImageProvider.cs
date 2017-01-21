@@ -1,10 +1,24 @@
 ﻿using System.Drawing;
+using System.IO;
 using chumakeveryday.Config;
 
 namespace chumakeveryday.Provider
 {
-    public class ImageProvider
+    public static class ImageProvider
     {
-        public static Image GetImage() => Image.FromFile(Configurator.Config.Image);
+        private static readonly byte[] ImageBytes;
+
+        static ImageProvider()
+        {
+            ImageBytes = File.ReadAllBytes(Configurator.Config.Image);
+        }
+
+        public static Image GetImage()
+        {
+            using (var ms = new MemoryStream(ImageBytes))
+            {
+                return Image.FromStream(ms);
+            }
+        }
     }
 }

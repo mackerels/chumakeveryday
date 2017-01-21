@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
@@ -32,41 +33,26 @@ namespace chumakeveryday.Utils
             StringFormat format,
             Brush outlineBrush,
             Brush textBrush,
-            PointF point,
-            int outlineSize
-            )
+            PointF point
+        )
         {
-            context.DrawString(text,
-                font,
-                outlineBrush,
-                point.X + outlineSize,
-                point.Y + outlineSize,
-                format
-                );
+            var outliner = new Action<int, int>((x, y) =>
+                context.DrawString(text,
+                    font,
+                    outlineBrush,
+                    point.X + x,
+                    point.Y + y,
+                    format
+                ));
 
-            context.DrawString(text,
-                font,
-                outlineBrush,
-                point.X - outlineSize,
-                point.Y - outlineSize,
-                format
-                );
-
-            context.DrawString(text,
-                font,
-                outlineBrush,
-                point.X + outlineSize,
-                point.Y - outlineSize,
-                format
-                );
-
-            context.DrawString(text,
-                font,
-                outlineBrush,
-                point.X - outlineSize,
-                point.Y + outlineSize,
-                format
-                );
+            outliner(+2, +2);
+            outliner(+0, +3);
+            outliner(-2, +2);
+            outliner(-3, +0);
+            outliner(-2, -2);
+            outliner(+0, -3);
+            outliner(+2, -2);
+            outliner(+3, +0);
 
             context.DrawString(text, font, textBrush, point, format);
         }

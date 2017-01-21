@@ -26,10 +26,7 @@ namespace chumakeveryday.Factory
 
         public ImageFactory()
         {
-            var privateFontCollection = new PrivateFontCollection();
-            privateFontCollection.AddFontFile(Configurator.Config.Font);
-
-            _font = new Font(privateFontCollection.Families[0], 32);
+            _font = new Font("DejaVuSansMono", 32, FontStyle.Regular);
 
             _lineFormat = new StringFormat
             {
@@ -98,8 +95,7 @@ namespace chumakeveryday.Factory
             {
                 context.DrawOutlinedString(chunks[i], _font, _lineFormat, Brushes.Black, Brushes.White,
                     new PointF(_imageWidth / 2,
-                        _imageHeight - config.VerticalMargin - i * (_font.Size + config.LineSpacing)),
-                    config.Outline);
+                        _imageHeight - config.VerticalMargin - i * (_font.Size + config.LineSpacing)));
             }
 
             context.Save();
