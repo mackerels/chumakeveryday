@@ -6,7 +6,8 @@ created with .NET Core
 Requires: .NET Core, NodeJS, yarn
 
 Compile frontend:
-```
+```bash
+#in frontend dir
 yarn
 yarn typings
 yarn compile
@@ -14,7 +15,7 @@ yarn compile
 
 How to run:
 
-```
+```bash
 dotnet restore
 dotnet run
 ```
