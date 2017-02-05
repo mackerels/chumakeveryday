@@ -6,4 +6,5 @@ obj/
 metadata.chumak
 Images/daily.jpg
 project.lock.json
-
+wwwroot/index.html
+wwwroot/js
