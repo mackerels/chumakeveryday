@@ -13,7 +13,7 @@ namespace chumakeveryday.Server
             _host = new WebHostBuilder()
                 .UseKestrel()
                 .UseStartup<Startup>()
-                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseContentRoot(Path.Combine(Directory.GetCurrentDirectory(), "frontend"))
                 .UseUrls($"http://localhost:{Configurator.Config.Port}")
                 .Build();
         }

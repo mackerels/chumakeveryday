@@ -17,7 +17,7 @@ module.exports = {
     'js/chumak': './src/index.ts'
   },
   output: {
-    path: getRoot("../wwwroot"),
+    path: getRoot("wwwroot"),
     filename: '[name].[hash].bundle.js',
     sourceMapFilename: '[name].[hash].bundle.map'
   },
@@ -91,13 +91,13 @@ module.exports = {
         collapseWhitespace: true
       }
     }),
-    new CleanWebpackPlugin(['../wwwroot/js'], {
+    new CleanWebpackPlugin(['wwwroot/js'], {
       root: getRoot('src'),
       verbose: true,
       dry: false
     }),
     new UglifyJsPlugin({
-      cacheFolder: getRoot('node_modules/webpack-uglify-js-plugin/cache'),
+      cacheFolder: getRoot('cache'),
       debug: true,
       minimize: true,
       sourceMap: true,
