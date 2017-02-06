@@ -91,7 +91,7 @@ module.exports = {
         collapseWhitespace: true
       }
     }),
-    new CleanWebpackPlugin(['../wwwroot'], {
+    new CleanWebpackPlugin(['../wwwroot/js'], {
       root: getRoot('src'),
       verbose: true,
       dry: false
